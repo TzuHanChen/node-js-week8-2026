@@ -13,6 +13,10 @@ module.exports = new EntitySchema({
       type: "integer",
       nullable: false,
     },
+    retake_score: {
+      type: "integer",
+      nullable: true,
+    },
   },
   relations: {
     student: {
