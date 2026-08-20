@@ -31,6 +31,65 @@ async function main() {
   //      courseRepo.save({ name: '...', user: 教練物件, skill: 技能物件 })
   // ======================================================================
 
+  const skillRepo = dataSource.getRepository("Skill");
+  const userRepo = dataSource.getRepository("User");
+  const courseRepo = dataSource.getRepository("Course");
+
+  // 1. SKILL 三筆
+  const weightTraining = await skillRepo.save({ name: "重訓" });
+  const yoga = await skillRepo.save({ name: "瑜珈" });
+  const spinning = await skillRepo.save({ name: "飛輪" });
+
+  // 2. USER 兩位教練
+  const hagrid = await userRepo.save({
+    name: "海格教練",
+    email: "coach1@livefit.tw",
+    role: "COACH",
+  });
+  const mei = await userRepo.save({
+    name: "小美教練",
+    email: "coach2@livefit.tw",
+    role: "COACH",
+  });
+
+  // 3. COURSE 四堂課（每堂接上教練 + 技能）
+  await courseRepo.save({
+    name: "肌力入門班",
+    description: "適合初學者的肌力訓練課程",
+    start_at: "2026-08-01 09:00",
+    end_at: "2026-08-01 10:30",
+    max_participants: 20,
+    user: hagrid,
+    skill: weightTraining,
+  });
+  await courseRepo.save({
+    name: "週末飛輪",
+    description: "週末高強度飛輪有氧",
+    start_at: "2026-08-02 14:00",
+    end_at: "2026-08-02 15:00",
+    max_participants: 15,
+    user: mei,
+    skill: spinning,
+  });
+  await courseRepo.save({
+    name: "晨間瑜珈",
+    description: "早晨伸展放鬆瑜珈課",
+    start_at: "2026-08-03 07:00",
+    end_at: "2026-08-03 08:00",
+    max_participants: 25,
+    user: mei,
+    skill: yoga,
+  });
+  await courseRepo.save({
+    name: "核心特訓",
+    description: "核心肌群強化訓練",
+    start_at: "2026-08-04 18:00",
+    end_at: "2026-08-04 19:30",
+    max_participants: 12,
+    user: hagrid,
+    skill: weightTraining,
+  });
+
   console.log('🌱 seed 完成')
   await dataSource.destroy()
 }

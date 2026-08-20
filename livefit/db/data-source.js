@@ -1,5 +1,8 @@
 require('dotenv').config()
 const { DataSource } = require('typeorm')
+const User = require('../entities/User')
+const Skill = require('../entities/Skill')
+const Course = require('../entities/Course')
 
 // ============================================================
 // TODO：把你設計的 entity require 進來，然後加進下方的 entities 陣列
@@ -17,9 +20,7 @@ const dataSource = new DataSource({
   // ⚠️ 鐵律：synchronize 固定為 false，將 ORM 自動同步結構關閉，避免它動到正式資料；結構一律走 Migration
   synchronize: false,
 
-  entities: [
-    // TODO: 你的 entities
-  ],
+  entities: [User, Skill, Course],
   migrations: ['db/migrations/*.js'],
 })
 
